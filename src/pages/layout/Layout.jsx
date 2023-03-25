@@ -6,7 +6,7 @@ import Navbar from 'components/navbar/Navbar'
 import Sidebar from 'components/sidebar/Sidebar'
 
 function Layout() {
-  const isNonMobile = useMediaQuery('(max-width: 600px)')
+  const isNonMobile = useMediaQuery('(min-width: 600px)')
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
   return (
@@ -17,7 +17,7 @@ function Layout() {
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
       />
-      <Box>
+      <Box flexGrow={1}>
         <Navbar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
         <Outlet />
       </Box>

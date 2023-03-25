@@ -34,6 +34,64 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import FlexBetween from 'components/FlexBetween'
 import profileImage from 'assets/paul.jpg'
 
+const navItems = [
+  {
+    text: 'Dashboard',
+    icon: <HomeOutlined />
+  },
+  {
+    text: 'Client',
+    icon: null
+  },
+  {
+    text: 'Products',
+    icon: <ShoppingCartOutlined />
+  },
+  {
+    text: 'Customers',
+    icon: <Groups2Outlined />
+  },
+  {
+    text: 'Transactions',
+    icon: <ReceiptLongOutlined />
+  },
+  {
+    text: 'Geography',
+    icon: <PublicOutlined />
+  },
+  {
+    text: 'Sales',
+    icon: null
+  },
+  {
+    text: 'Overview',
+    icon: <PointOfSaleOutlined />
+  },
+  {
+    text: 'Daily',
+    icon: <TodayOutlined />
+  },
+  {
+    text: 'Monthly',
+    icon: <CalendarMonthOutlined />
+  },
+  {
+    text: 'Breakdown',
+    icon: <PieChartOutlined />
+  },
+  {
+    text: 'Management',
+    icon: null
+  },
+  {
+    text: 'Admin',
+    icon: <AdminPanelSettingsOutlined />
+  },
+  {
+    text: 'Performance',
+    icon: <TrendingUpOutlined />
+  }
+]
 const Sidebar = ({ isNonMobile, drawerWidth, isSidebarOpen, setIsSidebarOpen }) => {
   const { pathname } = useLocation() // the current path
   const [activePath, setActivePath] = useState('')
@@ -82,6 +140,53 @@ const Sidebar = ({ isNonMobile, drawerWidth, isSidebarOpen, setIsSidebarOpen }) 
                 )}
               </FlexBetween>
             </Box>
+            <List>
+              {navItems.map(({ text, icon }) => {
+                if (!icon) {
+                  return (
+                    <Typography key={text} sx={{ m: '2.25rem 0 1rem 3rem' }}>
+                      {text}
+                    </Typography>
+                  )
+                }
+                const lcText = text.toLowerCase()
+
+                return (
+                  <ListItem key={text} disablePadding>
+                    <ListItemButton
+                      onClick={() => {
+                        navigate(`/${lcText}`)
+                        setActivePath(lcText)
+                      }}
+                      // change backgroundColor when selected
+                      sx={{
+                        backgroundColor:
+                          activePath === lcText ? theme.palette.secondary[300] : 'transparent',
+                        color:
+                          activePath === lcText
+                            ? theme.palette.primary[200]
+                            : theme.palette.secondary[200]
+                      }}
+                    >
+                      <ListItemIcon
+                        sx={{
+                          ml: '2rem',
+                          color:
+                            activePath === lcText
+                              ? theme.palette.primary[600]
+                              : theme.palette.secondary[200]
+                        }}
+                      >
+                        {icon}
+                      </ListItemIcon>
+                      <ListItemText primary={text}>
+                        {activePath === lcText && <ChevronRightOutlined sx={{ ml: 'auto' }} />}
+                      </ListItemText>
+                    </ListItemButton>
+                  </ListItem>
+                )
+              })}
+            </List>
           </Box>
         </Drawer>
       )}
